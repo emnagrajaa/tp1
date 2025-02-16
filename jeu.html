@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jeu</title>
+    <script>
+        function randomnum(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function difficulty() {
+            const d = document.getElementById("difficulty").value.toLowerCase();
+            switch (d) {
+                case "facile":
+                    return { min: 1, max: 10, tentatives: 5 };
+                case "intermédiaire":
+                    return { min: 1, max: 50, tentatives: 7 };
+                case "difficile":
+                    return { min: 1, max: 100, tentatives: 10 };
+                default:
+                    alert("Niveau invalide, choix par défaut : Facile");
+                    return { min: 1, max: 10, tentatives: 5 };
+            }
+        }
+
+        function Game() {
+            const settings = difficulty();
+            const secret = randomnum(settings.min, settings.max);
+            let x = settings.tentatives;
+
+            alert(`Vous devez deviner un nombre entre ${settings.min} et ${settings.max}. Vous avez ${settings.tentatives} tentatives.`);
+            
+            while (x > 0) {
+                let y = parseInt(prompt(`Entrez un nombre (${x} tentatives restantes) :`));
+
+                if (isNaN(y)) {
+                    alert("Veuillez entrer un nombre valide.");
+                    continue;
+                }
+
+                if (y < settings.min || y > settings.max) {
+                    alert(`Le nombre doit être entre ${settings.min} et ${settings.max}.`);
+                    continue;
+                }
+
+                if (y === secret) {
+                    alert("Félicitations !");
+                    break;
+                } else if (y < secret) {
+                    alert("le nombre choisi est inferieur au nombre secret");
+                } else {
+                    alert("le nombre choisi est superieur au nombre secret");
+                }
+
+                x--;
+            }
+            
+            if (x === 0) {
+                alert(`Dommage ! Le nombre était ${secret}.`);
+            }
+
+            if (confirm("Voulez-vous rejouer ?")) {
+                playGame();
+            } else {
+                alert(" À bientôt !");
+            }
+        }
+    </script>
+  </head>
+  <body>
+    <h1> Jeu de chiffre cache</h1>
+    <label for="difficulty">Choisissez un niveau de difficulté : </label>
+    <input type="text" id="difficulty" placeholder="Facile, Intermediaire, Difficile">
+    <button onclick="Game()">jouer</button>
+  </body>
+</html>
