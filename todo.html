@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de Todo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #todo-container {
+            max-width: 400px;
+            margin: auto;
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 4px;
+        }
+        .delete {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestionnaire de Todo</h1>
+    <div id="todo-container">
+        <input type="text" id="todo-name" placeholder="Nom de la tâche">
+        <input type="text" id="todo-content" placeholder="Contenu de la tâche">
+        <button onclick="addTodo()">Ajouter</button>
+        <ul id="todo-list"></ul>
+    </div>
+    
+    <script>
+        function addTodo(){
+            const name=document.getElementById('todo-name').value;
+            const content=document.getElementById('todo-content').value;
+            if(name.trim()==''|| content.trim()==''){
+                alert('Veuillez remplir tous les champs.');
+                return;
+            }
+            const li = document.createElement('li');
+            li.innerHTML=`<strong>${name}<strong>: ${content}<button class "delete" onclick ="this.parentElement.remove()">Supprimer</button>`;
+            document.getElementById('todo-list').appendChild(li);
+            document.getElementById('todo-name').value='';
+            document.getElementById('todo-content').value='';
+        }
+       
+    </script>
+</body>
+</html>
